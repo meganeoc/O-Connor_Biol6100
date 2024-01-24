@@ -1,0 +1,12 @@
+---
+title: "Homework_2"
+author: "Megan O'Connor"
+date: "2024-01-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is the link for assignment 1: [link](Homework_2.html)
