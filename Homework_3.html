@@ -359,6 +359,63 @@ display: none;
 
 <div id="homework-3-regular-expression-puzzles" class="section level2">
 <h2>Homework 3: Regular Expression Puzzles</h2>
+<div id="problem-1." class="section level3">
+<h3>Problem 1.</h3>
+<p>First I found everywhere there was 2 or more spaces (wanted to leave
+regular spaces), and then replaced those with commas</p>
+<pre><code>Find: \s{2,}
+Replace: ,</code></pre>
+</div>
+<div id="problem-2." class="section level3">
+<h3>Problem 2.</h3>
+<p>I had to hilight the first 2 words (last and first names) with their
+commas. Then the long string is for the college names. I reordered in
+replace by changing the word order around with the numbers and put
+parantheses around 3 which is the college name.</p>
+<pre><code>Find: (\w+), (\w+), (\w+\s*\w*\s*\w*)$
+Replace: \2 \1 (\3)</code></pre>
+</div>
+<div id="problem-3" class="section level3">
+<h3>Problem 3</h3>
+<p>I had to highlight the numbers first, then the names of each song.
+Then I had to replace with first the number, the name of the song, and
+then a line break to make it a list</p>
+<pre><code>Find: (\d{2,}) (\w+\s*\w+\s*\w+\s*\w+\.mp3)
+Replace: \1 \2 \n</code></pre>
+</div>
+<div id="problem-4" class="section level3">
+<h3>Problem 4</h3>
+<p>I reclassified the items so the track number, title, and .mp3 were
+separate this time so I could reorder the title. Then I switched their
+order around and added an underscore to match the title needed.</p>
+<pre><code>Find: (\d{2,}) (\w+\s*\w+\s*\w*\s*\w*)(\.mp3)
+Replace: \2_\1\3</code></pre>
+</div>
+<div id="problem-5" class="section level3">
+<h3>Problem 5</h3>
+<p>I isolated the first letter of the genus (then the rest of the word),
+and the species. I then highlighted the irrelevant numbers with the
+decimals separately from the needed numbers. Then I reordered the
+replace with the first letter, underscore, species, and then the needed
+number. I just left the other numbers out.</p>
+<pre><code>Find: (\w)\w+,(\w+),(\d+\.\d),(\d+)
+Replace:\1_\2, \4</code></pre>
+</div>
+<div id="problem-6" class="section level3">
+<h3>Problem 6</h3>
+<p>I made sure only the first 4 letters were captured in the species
+name this time, but the replace was the same.</p>
+<pre><code>Find: (\w)\w+,(\w{4})\w+,(\d+\.\d),(\d+)
+Replace: \1_\2, \4</code></pre>
+</div>
+<div id="problem-7" class="section level3">
+<h3>Problem 7</h3>
+<p>This time made sure first 3 letters were captured for each, put them
+together in replace without a space. Switched captures 4 and 3 around to
+reverse the number order!</p>
+<pre><code>Find: (\w{3})\w+,(\w{3})\w+,(\d+\.\d),(\d+)
+Replace: \1\2, \4, \3</code></pre>
+</div>
 </div>
 
 
