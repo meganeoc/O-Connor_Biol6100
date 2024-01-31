@@ -9,4 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This is the link for assignment 1: [link](Homework_2.html)
+### Meg's Homework List 
+Homework 1: [link](Homework_2.html)
+
+Homework 3: [link](Homework_3.html)
+
