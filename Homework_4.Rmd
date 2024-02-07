@@ -1,0 +1,32 @@
+---
+title: "Homework_4"
+author: "Megan O'Connor"
+date: "2024-02-07"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Homework 4: Atomic Vector Puzzles
+
+### Problem 1
+```
+```
+
+### Problem 2
+```
+```
+
+### Problem 3
+```
+```
+
+### Problem 4
+```
+```
+
+### Problem 5
+```
+```
