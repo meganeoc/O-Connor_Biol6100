@@ -361,15 +361,60 @@ display: none;
 <h2>Homework 4: Atomic Vector Puzzles</h2>
 <div id="problem-1" class="section level3">
 <h3>Problem 1</h3>
-<pre><code></code></pre>
+<p>First assigned all the variables to their letters. Then assigned z to
+each formula I needed to make, made sure I used markers like asterisks
+to create the math problem.</p>
+<pre><code>x &lt;- 1.1
+a &lt;- 2.2
+b &lt;- 3.3
+
+z &lt;- x^(a^b)
+print(z)
+z &lt;- (x^a)^b
+print(z)
+z &lt;- 3*(x^3)+2*(x^2)+1
+print(z)</code></pre>
 </div>
 <div id="problem-2" class="section level3">
 <h3>Problem 2</h3>
-<pre><code></code></pre>
+<ol style="list-style-type: lower-alpha">
+<li>Combined 2 vectors going forward and backwards</li>
+</ol>
+<pre><code>z &lt;- c(1,2,3,4,5,6,7,8)
+z &lt;- c((seq(from=1, to=8)),(seq(from=7, to=1)))
+print(z)</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Made sure R would only print 1-5, and wanted the numbers to repeat
+their number of times so made “times” the vector</li>
+</ol>
+<pre><code>z &lt;- seq(from=1, to=5)
+z &lt;- rep(x=z, times=z)
+print(z)</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Similar to b however we wanted the numbers to repeat number of times
+“backwards” so used “rev” command in the “times” command</li>
+</ol>
+<pre><code>z &lt;- seq(from=5, to=1)
+z &lt;- rep(x=z, times=rev(z))
+print(z)</code></pre>
 </div>
 <div id="problem-3" class="section level3">
 <h3>Problem 3</h3>
-<pre><code></code></pre>
+<p>First created the “runifs” to make random numbers for x and y. Then
+used polar coordinates conversion formula to define r and theta. Then
+combined those two things to make an actual set of coordinates.</p>
+<pre><code>x &lt;- runif(1)
+print(x)
+y &lt;- runif(1)
+print(y)
+
+r &lt;- sqrt((x^2)+(y^2))
+print(r)
+theta &lt;- atan(y/x)
+print(theta)
+
+coords &lt;-c(r,theta)
+print(coords)</code></pre>
 </div>
 <div id="problem-4" class="section level3">
 <h3>Problem 4</h3>
