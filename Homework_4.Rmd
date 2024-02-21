@@ -67,8 +67,41 @@ print(coords)
 
 ### Problem 4
 ```
+queue <- c("sheep", "fox", "owl", "ant")
+print(queue)
+
+# Serpent gets in line
+queue <- c(queue, "serpent")
+print(queue)
+
+# Sheep enters ark
+queue <- c(queue[2:5])
+print(queue)
+
+# Donkey talks his way to the front
+queue <- c("donkey", queue[1:4])
+print(queue)
+
+# Serpent gets impatient and leaves
+queue <- c(queue[1:4])
+print(queue)
+
+# Owl gets bored and leaves
+queue <- c(queue[1:2], queue[4])
+print(queue)
+
+# Aphid cuts the ant
+queue <- c(queue[1:2], "aphid", queue[3])
+print(queue)
+
+# Define position of aphid in line
+print(which("aphid" == queue))
 ```
 
 ### Problem 5
 ```
+x <- 1:100
+
+y <- which((a%%3!=0) & (a%%3!=0) & (a%%7!=0))
+print(y)
 ```

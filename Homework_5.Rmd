@@ -1,0 +1,40 @@
+---
+title: "Homework_5"
+author: "Megan O'Connor"
+date: "2024-02-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Homework 5: Matrices, Lists, and Dataframes
+
+### Problem 1
+```
+n_dims <-sample(3:10, 1)
+
+myvec <- 1:(n_dims^2)
+print(myvec)
+
+sample(myvec)
+
+myMat <- matrix(data=myvec,nrow=4)
+print(myMat)
+
+t(myMat)
+print(myMat)
+# reordered so the numbers are going from left to right rather than vertical
+
+eigen(myMat)
+# an Eigenvalue tells us about variance in the data. Each eigenvalue tells us how spread out the data is from one another. Every data point has an eigenvector (which is why there are 16 for my matrix) and those are where the eigenvalue comes from. All the values are decimals to very very small decimals
+
+typeof(eigen(myMat))
+# these values are a "list"
+```
+
+### Problem 2
+
+
+
