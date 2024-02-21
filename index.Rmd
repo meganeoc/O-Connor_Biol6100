@@ -17,4 +17,4 @@ Maybe this is Homework 3: [link](Homework_3.html)
 
 Allegedly Homework 4: [link](Homework_4.html)
 
-Booby Trap OR Homework 5: [link][Homework_5.html]
+Booby Trap OR Homework 5: [link](Homework_5.html)
