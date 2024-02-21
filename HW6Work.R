@@ -1,0 +1,148 @@
+# FAKE DATA
+library(ggplot2) # for graphics
+library(MASS) # for maximum likelihood estimation
+
+# quick and dirty, a truncated normal distribution to work on the solution set
+
+# -------------- Read in Data Vector --------------
+z <- rnorm(n=3000,mean=0.2)
+z <- data.frame(1:3000,z)
+names(z) <- list("ID","myVar")
+z <- z[z$myVar>0,]
+str(z)
+summary(z$myVar)
+
+# ----------------- Plot Histogram of Data ------------
+p1 <- ggplot(data=z, aes(x=myVar, y=..density..)) +
+  geom_histogram(color="grey60",fill="coral3",size=0.2) 
+print(p1)
+
+# -------------- Add empirical density curve ----------
+p1 <-  p1 +  geom_density(linetype="dotted",size=0.75)
+print(p1)
+
+# ------------ Max Likelihood Parameters for Normal -----
+normPars <- fitdistr(z$myVar,"normal")
+print(normPars)
+str(normPars)
+normPars$estimate["mean"] # note structure of getting a named attribute
+
+# ----------- NORMAL Prob Density ------------------
+meanML <- normPars$estimate["mean"]
+sdML <- normPars$estimate["sd"]
+
+xval <- seq(0,max(z$myVar),len=length(z$myVar))
+
+stat <- stat_function(aes(x = xval, y = ..y..), fun = dnorm, colour="red", n = length(z$myVar), args = list(mean = meanML, sd = sdML))
+p1 + stat
+
+# -----------EXPONENTIAL Prob Density ---------------
+# models continuous variables
+expoPars <- fitdistr(z$myVar,"exponential")
+rateML <- expoPars$estimate["rate"]
+
+stat2 <- stat_function(aes(x = xval, y = ..y..), fun = dexp, colour="blue", n = length(z$myVar), args = list(rate=rateML))
+p1 + stat + stat2
+
+# --------- UNIFORM Prob Density ------------------
+# assumes every outcome has same probability of occuring
+stat3 <- stat_function(aes(x = xval, y = ..y..), fun = dunif, colour="darkgreen", n = length(z$myVar), args = list(min=min(z$myVar), max=max(z$myVar)))
+p1 + stat + stat2 + stat3
+
+# ----------- GAMMA Prob Density ---------------
+# Sum of expo distrubutions
+# time series modeling
+gammaPars <- fitdistr(z$myVar,"gamma")
+shapeML <- gammaPars$estimate["shape"]
+rateML <- gammaPars$estimate["rate"]
+
+stat4 <- stat_function(aes(x = xval, y = ..y..), fun = dgamma, colour="brown", n = length(z$myVar), args = list(shape=shapeML, rate=rateML))
+p1 + stat + stat2 + stat3 + stat4
+
+# ----------- BETA Prob Density ---------------------
+# generalization of uniform distribution
+# bounded and continuous, no specific shape
+# shape changes based on parameters
+# used in bassian analysis, as a way to have an assumption
+pSpecial <- ggplot(data=z, aes(x=myVar/(max(myVar + 0.1)), y=..density..)) +
+  geom_histogram(color="grey60",fill="skyblue2",size=0.2) + 
+  xlim(c(0,1)) +
+  geom_density(size=0.75,linetype="dotted")
+
+betaPars <- fitdistr(x=z$myVar/max(z$myVar + 0.1),start=list(shape1=1,shape2=2),"beta")
+shape1ML <- betaPars$estimate["shape1"]
+shape2ML <- betaPars$estimate["shape2"]
+
+statSpecial <- stat_function(aes(x = xval, y = ..y..), fun = dbeta, colour="orchid", n = length(z$myVar), args = list(shape1=shape1ML,shape2=shape2ML))
+pSpecial + statSpecial
+
+# --------------DOLPHIN DATA I FOUND----------
+# This study looked at the energetic cost of locomotion of bottlenose dolphins
+# variable I chose to focus on was "ml of O2 per kg dolphin per minute"
+z <- read.csv("Fig_3.csv",header=TRUE,sep=",")
+str(z)
+
+z<-na.omit(z)
+z$myVar <-z$O2_ml_per_kg_min
+summary(z)
+
+# Histogram of Data
+p1 <- ggplot(data=z, aes(x=myVar, y=after_stat(density))) +
+  geom_histogram(color="grey60",fill="royalblue3",size=0.2) 
+print(p1)
+
+# Gamma Probability Density (Fits Pretty Well)
+gammaPars <- fitdistr(z$myVar,"gamma")
+shapeML <- gammaPars$estimate["shape"]
+rateML <- gammaPars$estimate["rate"]
+
+stat <- stat_function(aes(x = myVar, y = ..y..), fun = dgamma, colour="brown", n = length(z$myVar), args = list(shape=shapeML, rate=rateML))
+p1 + stat 
+
+# Normal Probability Density (DOES NOT MATCH WELL!)
+meanML <- normPars$estimate["mean"]
+sdML <- normPars$estimate["sd"]
+
+xval <- seq(0,max(z$myVar),len=length(z$myVar))
+
+stat2 <- stat_function(aes(x = myVar, y = ..y..), fun = dnorm, colour="orchid", n = length(z$myVar), args = list(mean = meanML, sd = sdML))
+p1 + stat + stat2
+
+# ------------------ Creating a New Simulation --------------------------
+# Max Likelihood Parameters
+normPars <- fitdistr(z$myVar,"normal")
+print(normPars)
+str(normPars)
+normPars$estimate["mean"] # note structure of getting a named attribute
+
+# Reading in New Vector
+simul <- rnorm(n=3000,mean=5.676607)
+simul <- data.frame(1:3000,simul)
+names(simul) <- list("ID","myVar")
+simul <- simul[simul$myVar>0,]
+str(simul)
+summary(simul$myVar)
+
+# Histogram of Simulation
+p2 <- ggplot(data=simul, aes(x=myVar, y=after_stat(density))) +
+  geom_histogram(color="grey60",fill="darkslategrey",size=0.2) 
+print(p2)
+
+# Gamma Probability Density of Simulation
+gammaPars <- fitdistr(z$myVar,"gamma")
+shapeML <- gammaPars$estimate["shape"]
+rateML <- gammaPars$estimate["rate"]
+
+stat <- stat_function(aes(x = myVar, y = ..y..), fun = dgamma, colour="brown", n = length(simul$myVar), args = list(shape=shapeML, rate=rateML))
+p2 + stat
+
+
+# Fresh Plot of the Original Dolphin Data
+print(p1)
+# With Gamma line
+p1 + stat
+
+#Fresh Simulated Plot 
+print(p2)
+p2 + stat
+
