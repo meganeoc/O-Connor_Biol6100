@@ -381,6 +381,58 @@ eigen(myMat)
 typeof(eigen(myMat))
 # these values are a &quot;list&quot;</code></pre>
 </div>
+<div id="problem-2" class="section level3">
+<h3>Problem 2</h3>
+<pre><code># 4x4 matrix with random uniform values (my_matrix)
+my_matrix &lt;- matrix(runif(16),nrow=4)
+
+# 100 element vector of TRUE/FALSE values (my_logical)
+my_logical&lt;- runif(100)&gt;0.5
+
+# 26 element vector of all lower case letters in a random order (my_letters)
+my_letters&lt;- sample(letters)
+
+# list with element [2,2] from the matrix, second element of logical and second 
+# element of letters (new_list)
+new_list &lt;- list(my_matrix[2,2], my_logical[2], my_letters[2])
+print(new_list)
+
+#Confirm underlying data types
+typeof(new_list) 
+print(typeof(new_list[[1]]))
+print(typeof(new_list[[2]]))
+print(typeof(new_list[[3]]))
+
+# combine the list together and figure out vector type
+new_vector &lt;- c(new_list[[1]], new_list[[2]], new_list[[3]])
+print(typeof(new_vector))</code></pre>
+</div>
+<div id="problem-3" class="section level3">
+<h3>Problem 3</h3>
+<p>create data frame with two variables (=columns) and 26 cases (=rows)
+below:</p>
+<pre><code># call the first variable my_unis, fill with 26 random values from 0 to 10
+my_unis &lt;- runif(26,min=0,max=10)
+
+# my_letters fill with 26 capital letters in random order
+my_letters &lt;- sample(LETTERS)
+
+my_DF &lt;- data.frame(my_unis, my_letters)
+
+# for the first variable, use a single line of code in R to select 4 random 
+# rows and replace the numerical values in those rows with NA.
+my_DF[sample(1:26,4, 1]&lt;-NA
+
+# for first variable write a line to find which rows have the NA
+print(my_DF[is.na(my_DF$my_unis, ]))
+
+# reorder entire DF to arrange 2nd variable alphabetically
+my_DF[order(my_DF$my_letters), ]
+
+#Calculate column mean for first variable
+print(mean(my_DF$my_unis, na.rm=TRUE))
+</code></pre>
+</div>
 </div>
 
 

@@ -35,6 +35,57 @@ typeof(eigen(myMat))
 ```
 
 ### Problem 2
+```
+# 4x4 matrix with random uniform values (my_matrix)
+my_matrix <- matrix(runif(16),nrow=4)
+
+# 100 element vector of TRUE/FALSE values (my_logical)
+my_logical<- runif(100)>0.5
+
+# 26 element vector of all lower case letters in a random order (my_letters)
+my_letters<- sample(letters)
+
+# list with element [2,2] from the matrix, second element of logical and second 
+# element of letters (new_list)
+new_list <- list(my_matrix[2,2], my_logical[2], my_letters[2])
+print(new_list)
+
+#Confirm underlying data types
+typeof(new_list) 
+print(typeof(new_list[[1]]))
+print(typeof(new_list[[2]]))
+print(typeof(new_list[[3]]))
+
+# combine the list together and figure out vector type
+new_vector <- c(new_list[[1]], new_list[[2]], new_list[[3]])
+print(typeof(new_vector))
+```
+
+### Problem 3
+create data frame with two variables (=columns) and 26 cases (=rows) below:
+```
+# call the first variable my_unis, fill with 26 random values from 0 to 10
+my_unis <- runif(26,min=0,max=10)
+
+# my_letters fill with 26 capital letters in random order
+my_letters <- sample(LETTERS)
+
+my_DF <- data.frame(my_unis, my_letters)
+
+# for the first variable, use a single line of code in R to select 4 random 
+# rows and replace the numerical values in those rows with NA.
+my_DF[sample(1:26,4, 1]<-NA
+
+# for first variable write a line to find which rows have the NA
+print(my_DF[is.na(my_DF$my_unis, ]))
+
+# reorder entire DF to arrange 2nd variable alphabetically
+my_DF[order(my_DF$my_letters), ]
+
+#Calculate column mean for first variable
+print(mean(my_DF$my_unis, na.rm=TRUE))
+
+```
 
 
 
