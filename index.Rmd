@@ -20,3 +20,5 @@ Allegedly Homework 4: [link](Homework_4.html)
 Booby Trap OR Homework 5: [link](Homework_5.html)
 
 Homework 6? using data about bottlenose dolphins from Allen et. al (2022): [link](Homework_6.html)
+
+Perhaps Homework 7 (Experimental Design): [link](Homework_7.html)

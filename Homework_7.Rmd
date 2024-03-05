@@ -1,0 +1,182 @@
+---
+title: "Homework_7"
+author: "Megan O'Connor"
+date: "2024-02-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**1. Think about an ongoing study in your lab (or a paper you have read in a different class), and decide on a pattern that you might expect in your experiment if a specific hypothesis were true.**
+Using the dataset from last week I found on DRYAD from Allen et. al, I am predicting to see the O2 output per kilogram per minute to be higher in those dolphins in a steady state rather than those at rest. 
+
+**2. To start simply, assume that the data in each of your treatment groups follow a normal distribution. Specify the sample sizes, means, and variances for each group that would be reasonable if your hypothesis were true. You may need to consult some previous literature and/or an expert in the field to come up with these numbers.**
+```{r}
+library(ggplot2) # for graphics
+library(MASS) # for maximum likelihood estimation
+library(dplyr)
+
+# reading in the same data from last week
+z <- read.csv("Fig_3.csv",header=TRUE,sep=",")
+str(z)
+
+z<-na.omit(z)
+z$myVar <-z$O2_ml_per_kg_min
+summary(z)
+
+
+# Using work from last time where we created a simulation with the same attributes
+normPars <- fitdistr(z$myVar,"normal")
+print(normPars)
+str(normPars)
+normPars$estimate["mean"] # Found the mean
+
+# Finding Sample Sizes for whole set
+length(z$myVar)
+
+# Finding Variance for whole set
+var(z$myVar)
+sd(z$myVar)
+############ Now need them for each treatment group tho #############
+steady <-z[z$State=="SteadyState", ]
+summary(steady)
+# sd(steady)
+
+rest <-z[z$State=="Rest", ]
+summary(rest)
+
+```
+**3. Using the methods we have covered in class, write code to create a random data set that has these attributes. Organize these data into a data frame with the appropriate structure.**
+```{r}
+# New Dataset
+MySet <- rnorm(n=3000,mean=5.676607)
+MySet <- data.frame(1:3000,MySet)
+names(MySet) <- list("ID","myVar")
+MySet <- MySet[MySet$myVar>0,]
+str(MySet)
+summary(MySet$myVar)
+```
+**4. Now write code to analyze the data (probably as an ANOVA or regression analysis, but possibly as a logistic regression or contingency table analysis. Write code to generate a useful graph of the data.**
+I'm going to use an ANOVA since I'm testing only one variable against its treatment groups.
+```{r}
+# ANOVA Data Frame Construction
+nGroup <- 2 # number of treatment groups
+nName <- c("SteadyState","Rest") # names of groups
+nSize <- c(35,58) # number of observations in each group
+nMean <- c(9.842,2.8551 ) # mean of each group
+nSD <- c(4.36269,4.36269) # standard deviation of each group
+
+ID <- 1:(sum(nSize)) # id vector for each row
+resVar <- c(rnorm(n=nSize[1],mean=nMean[1],sd=nSD[1]),
+            (rnorm(n=nSize[2],mean=nMean[2],sd=nSD[2])))
+TGroup <- rep(nName,nSize)
+ANOdata <- data.frame(TGroup, resVar)
+str(ANOdata)
+
+# Basic ANOVA
+ANOmodel <- aov(resVar~TGroup,data=ANOdata)
+print(ANOmodel)
+print(summary(ANOmodel))
+z <- summary(ANOmodel)
+str(z)
+aggregate(resVar~TGroup,data=ANOdata,FUN=mean)
+unlist(z)
+unlist(z)[7]
+ANOsum <- list(Fval=unlist(z)[7],probF=unlist(z)[9])
+ANOsum
+
+# Plot of ANOVA Data
+ANOPlot <- ggplot(data=ANOdata,aes(x=TGroup,y=resVar,fill=TGroup)) +
+           geom_boxplot()
+print(ANOPlot)
+# ggsave(filename="Plot2.pdf",plot=ANOPlot,device="pdf")
+```
+5. Try running your analysis multiple times to get a feeling for how variable the results are with the same parameters, but different sets of random numbers.
+
+**6. Now begin adjusting the means of the different groups. Given the sample sizes you have chosen, how small can the differences between the groups be (the “effect size”) for you to still detect a significant pattern (p < 0.05)?**
+When I changed the means to 7 and 4, the p-value was still significant meaning the null hypothesis can still be rejected. I again adjusted the means closer, to 6 and 5, and the p-value became insignificant. Small adjustments showed that even a 0.1 difference in effect size (1.3 difference vs. 1.2) changes the significance of my data.
+
+```{r}
+# ANOVA Data Frame for the new means
+nGroup <- 2 # number of treatment groups
+nName <- c("SteadyState","Rest") # names of groups
+nSize <- c(35,58) # number of observations in each group
+nMean <- c(6.3,5 ) # CHANGED THESE MEANS
+nSD <- c(4.36269,4.36269) # standard deviation of each group
+
+ID <- 1:(sum(nSize)) # id vector for each row
+resVar <- c(rnorm(n=nSize[1],mean=nMean[1],sd=nSD[1]),
+            (rnorm(n=nSize[2],mean=nMean[2],sd=nSD[2])))
+TGroup <- rep(nName,nSize)
+ANOdata <- data.frame(TGroup, resVar)
+str(ANOdata)
+
+# Basic ANOVA
+ANOmodel <- aov(resVar~TGroup,data=ANOdata)
+print(ANOmodel)
+print(summary(ANOmodel))
+z <- summary(ANOmodel)
+str(z)
+aggregate(resVar~TGroup,data=ANOdata,FUN=mean)
+unlist(z)
+unlist(z)[7]
+ANOsum <- list(Fval=unlist(z)[7],probF=unlist(z)[9])
+ANOsum
+
+# Plot of ANOVA Data
+ANOPlot <- ggplot(data=ANOdata,aes(x=TGroup,y=resVar,fill=TGroup)) +
+           geom_boxplot()
+print(ANOPlot)
+# ggsave(filename="Plot2.pdf",plot=ANOPlot,device="pdf")
+```
+
+
+**7. Alternatively, for the effect sizes you originally hypothesized, what is the minimum sample size you would need in order to detect a statistically significant effect? Again, run the model a few times with the same parameter set to get a feeling for the effect of random variation in the data.**
+The original sample size was 3000, after reducing it to 300 the relationship was still significant, and remained so when reducing it to 100. I could reduce the sample size to as low as 10 and the data would still remain significant. It is interesting to adjust sample size as dolphins are extremely difficult animals to collect data on, and in a study like this one where they are working with captive dolphins there are only so many animals to sample. Bringing the sample size way down for my model would be a much more accurate look at what the actual data entailed.
+
+```{r}
+# Adjusting the Sample Size 
+MySet <- rnorm(n=10,mean=5.676607)
+MySet <- data.frame(1:10,MySet)
+names(MySet) <- list("ID","myVar")
+MySet <- MySet[MySet$myVar>0,]
+str(MySet)
+summary(MySet$myVar)
+
+# Running ANOVA
+nGroup <- 2 # number of treatment groups
+nName <- c("SteadyState","Rest") # names of groups
+nSize <- c(35,58) # number of observations in each group
+nMean <- c(9.842,2.8551 ) # mean of each group
+nSD <- c(4.36269,4.36269) # standard deviation of each group
+
+ID <- 1:(sum(nSize)) # id vector for each row
+resVar <- c(rnorm(n=nSize[1],mean=nMean[1],sd=nSD[1]),
+            (rnorm(n=nSize[2],mean=nMean[2],sd=nSD[2])))
+TGroup <- rep(nName,nSize)
+ANOdata <- data.frame(TGroup, resVar)
+str(ANOdata)
+
+# Basic ANOVA
+ANOmodel <- aov(resVar~TGroup,data=ANOdata)
+print(ANOmodel)
+print(summary(ANOmodel))
+z <- summary(ANOmodel)
+str(z)
+aggregate(resVar~TGroup,data=ANOdata,FUN=mean)
+unlist(z)
+unlist(z)[7]
+ANOsum <- list(Fval=unlist(z)[7],probF=unlist(z)[9])
+ANOsum
+
+# Plot of ANOVA Data
+ANOPlot <- ggplot(data=ANOdata,aes(x=TGroup,y=resVar,fill=TGroup)) +
+           geom_boxplot()
+print(ANOPlot)
+# ggsave(filename="Plot2.pdf",plot=ANOPlot,device="pdf")
+```
+
+
+

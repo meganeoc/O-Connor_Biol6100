@@ -91,7 +91,7 @@ statSpecial <- stat_function(aes(x = xval, y = ..y..), fun = dbeta, colour="orch
 pSpecial + statSpecial
 ```
 
-### Dolphin data from DRYAD (Allen et. al)
+### Dolphin data from DRYAD (Allen et. al 2022)
 #### "Dynamic body acceleration as a proxy to predict the cost of locomotion in bottlenose dolphins"
 ```{r}
 # This study looked at the energetic cost of locomotion of bottlenose dolphins
@@ -133,7 +133,7 @@ p1 + stat + stat2
 normPars <- fitdistr(z$myVar,"normal")
 print(normPars)
 str(normPars)
-normPars$estimate["mean"] # note structure of getting a named attribute
+normPars$estimate["mean"] 
 
 # Reading in New Vector
 simul <- rnorm(n=3000,mean=5.676607)
