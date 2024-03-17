@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Homework 5: Matrices, Lists, and Dataframes
 
 ### Problem 1
-```
+```{r}
 n_dims <-sample(3:10, 1)
 
 myvec <- 1:(n_dims^2)
@@ -35,7 +35,7 @@ typeof(eigen(myMat))
 ```
 
 ### Problem 2
-```
+```{r}
 # 4x4 matrix with random uniform values (my_matrix)
 my_matrix <- matrix(runif(16),nrow=4)
 
@@ -63,7 +63,7 @@ print(typeof(new_vector))
 
 ### Problem 3
 create data frame with two variables (=columns) and 26 cases (=rows) below:
-```
+```{r}
 # call the first variable my_unis, fill with 26 random values from 0 to 10
 my_unis <- runif(26,min=0,max=10)
 

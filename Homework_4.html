@@ -364,96 +364,107 @@ display: none;
 <p>First assigned all the variables to their letters. Then assigned z to
 each formula I needed to make, made sure I used markers like asterisks
 to create the math problem.</p>
-<pre><code>x &lt;- 1.1
+<pre class="r"><code>x &lt;- 1.1
 a &lt;- 2.2
 b &lt;- 3.3
 
 z &lt;- x^(a^b)
-print(z)
-z &lt;- (x^a)^b
-print(z)
-z &lt;- 3*(x^3)+2*(x^2)+1
 print(z)</code></pre>
+<pre><code>## [1] 3.61714</code></pre>
+<pre class="r"><code>z &lt;- (x^a)^b
+print(z)</code></pre>
+<pre><code>## [1] 1.997611</code></pre>
+<pre class="r"><code>z &lt;- 3*(x^3)+2*(x^2)+1
+print(z)</code></pre>
+<pre><code>## [1] 7.413</code></pre>
 </div>
 <div id="problem-2" class="section level3">
 <h3>Problem 2</h3>
 <ol style="list-style-type: lower-alpha">
 <li>Combined 2 vectors going forward and backwards</li>
 </ol>
-<pre><code>z &lt;- c(1,2,3,4,5,6,7,8)
+<pre class="r"><code>z &lt;- c(1,2,3,4,5,6,7,8)
 z &lt;- c((seq(from=1, to=8)),(seq(from=7, to=1)))
 print(z)</code></pre>
+<pre><code>##  [1] 1 2 3 4 5 6 7 8 7 6 5 4 3 2 1</code></pre>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Made sure R would only print 1-5, and wanted the numbers to repeat
 their number of times so made “times” the vector</li>
 </ol>
-<pre><code>z &lt;- seq(from=1, to=5)
+<pre class="r"><code>z &lt;- seq(from=1, to=5)
 z &lt;- rep(x=z, times=z)
 print(z)</code></pre>
+<pre><code>##  [1] 1 2 2 3 3 3 4 4 4 4 5 5 5 5 5</code></pre>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Similar to b however we wanted the numbers to repeat number of times
 “backwards” so used “rev” command in the “times” command</li>
 </ol>
-<pre><code>z &lt;- seq(from=5, to=1)
+<pre class="r"><code>z &lt;- seq(from=5, to=1)
 z &lt;- rep(x=z, times=rev(z))
 print(z)</code></pre>
+<pre><code>##  [1] 5 4 4 3 3 3 2 2 2 2 1 1 1 1 1</code></pre>
 </div>
 <div id="problem-3" class="section level3">
 <h3>Problem 3</h3>
 <p>First created the “runifs” to make random numbers for x and y. Then
 used polar coordinates conversion formula to define r and theta. Then
 combined those two things to make an actual set of coordinates.</p>
-<pre><code>x &lt;- runif(1)
-print(x)
-y &lt;- runif(1)
-print(y)
-
-r &lt;- sqrt((x^2)+(y^2))
-print(r)
-theta &lt;- atan(y/x)
-print(theta)
-
-coords &lt;-c(r,theta)
+<pre class="r"><code>x &lt;- runif(1)
+print(x)</code></pre>
+<pre><code>## [1] 0.6134971</code></pre>
+<pre class="r"><code>y &lt;- runif(1)
+print(y)</code></pre>
+<pre><code>## [1] 0.9483262</code></pre>
+<pre class="r"><code>r &lt;- sqrt((x^2)+(y^2))
+print(r)</code></pre>
+<pre><code>## [1] 1.129469</code></pre>
+<pre class="r"><code>theta &lt;- atan(y/x)
+print(theta)</code></pre>
+<pre><code>## [1] 0.996585</code></pre>
+<pre class="r"><code>coords &lt;-c(r,theta)
 print(coords)</code></pre>
+<pre><code>## [1] 1.129469 0.996585</code></pre>
 </div>
 <div id="problem-4" class="section level3">
 <h3>Problem 4</h3>
-<pre><code>queue &lt;- c(&quot;sheep&quot;, &quot;fox&quot;, &quot;owl&quot;, &quot;ant&quot;)
-print(queue)
-
-# Serpent gets in line
+<pre class="r"><code>queue &lt;- c(&quot;sheep&quot;, &quot;fox&quot;, &quot;owl&quot;, &quot;ant&quot;)
+print(queue)</code></pre>
+<pre><code>## [1] &quot;sheep&quot; &quot;fox&quot;   &quot;owl&quot;   &quot;ant&quot;</code></pre>
+<pre class="r"><code># Serpent gets in line
 queue &lt;- c(queue, &quot;serpent&quot;)
-print(queue)
-
-# Sheep enters ark
+print(queue)</code></pre>
+<pre><code>## [1] &quot;sheep&quot;   &quot;fox&quot;     &quot;owl&quot;     &quot;ant&quot;     &quot;serpent&quot;</code></pre>
+<pre class="r"><code># Sheep enters ark
 queue &lt;- c(queue[2:5])
-print(queue)
-
-# Donkey talks his way to the front
+print(queue)</code></pre>
+<pre><code>## [1] &quot;fox&quot;     &quot;owl&quot;     &quot;ant&quot;     &quot;serpent&quot;</code></pre>
+<pre class="r"><code># Donkey talks his way to the front
 queue &lt;- c(&quot;donkey&quot;, queue[1:4])
-print(queue)
-
-# Serpent gets impatient and leaves
+print(queue)</code></pre>
+<pre><code>## [1] &quot;donkey&quot;  &quot;fox&quot;     &quot;owl&quot;     &quot;ant&quot;     &quot;serpent&quot;</code></pre>
+<pre class="r"><code># Serpent gets impatient and leaves
 queue &lt;- c(queue[1:4])
-print(queue)
-
-# Owl gets bored and leaves
+print(queue)</code></pre>
+<pre><code>## [1] &quot;donkey&quot; &quot;fox&quot;    &quot;owl&quot;    &quot;ant&quot;</code></pre>
+<pre class="r"><code># Owl gets bored and leaves
 queue &lt;- c(queue[1:2], queue[4])
-print(queue)
-
-# Aphid cuts the ant
+print(queue)</code></pre>
+<pre><code>## [1] &quot;donkey&quot; &quot;fox&quot;    &quot;ant&quot;</code></pre>
+<pre class="r"><code># Aphid cuts the ant
 queue &lt;- c(queue[1:2], &quot;aphid&quot;, queue[3])
-print(queue)
-
-# Define position of aphid in line
+print(queue)</code></pre>
+<pre><code>## [1] &quot;donkey&quot; &quot;fox&quot;    &quot;aphid&quot;  &quot;ant&quot;</code></pre>
+<pre class="r"><code># Define position of aphid in line
 print(which(&quot;aphid&quot; == queue))</code></pre>
+<pre><code>## [1] 3</code></pre>
 </div>
 <div id="problem-5" class="section level3">
 <h3>Problem 5</h3>
-<pre><code>x &lt;- 1:100
+<pre class="r"><code>x &lt;- 1:100
 
 y &lt;- which((a%%3!=0) &amp; (a%%3!=0) &amp; (a%%7!=0))
 print(y)</code></pre>
+<pre><code>## [1] 1</code></pre>
 </div>
 </div>
 
