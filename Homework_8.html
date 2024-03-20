@@ -11,9 +11,9 @@
 
 <meta name="author" content="Megan O’Connor" />
 
-<meta name="date" content="2024-01-24" />
+<meta name="date" content="2024-03-19" />
 
-<title>Index</title>
+<title>Homework_8</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -350,25 +350,347 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Index</h1>
+<h1 class="title toc-ignore">Homework_8</h1>
 <h4 class="author">Megan O’Connor</h4>
-<h4 class="date">2024-01-24</h4>
+<h4 class="date">2024-03-19</h4>
 
 </div>
 
 
-<p>Hello :)</p>
-<div id="megs-homework-list" class="section level3">
-<h3>Meg’s Homework List</h3>
-<p>Homework 1/2: <a href="Homework_2.html">link</a></p>
-<p>Maybe this is Homework 3: <a href="Homework_3.html">link</a></p>
-<p>Allegedly Homework 4: <a href="Homework_4.html">link</a></p>
-<p>Booby Trap OR Homework 5: <a href="Homework_5.html">link</a></p>
-<p>Homework 6? using data about bottlenose dolphins from Allen et. al
-(2022): <a href="Homework_6.html">link</a></p>
-<p>Perhaps Homework 7 (Experimental Design): <a href="Homework_7.html">link</a></p>
-<p>Definitely Homework 8: <a href="Homework_8.html">link</a></p>
-</div>
+<ol style="list-style-type: decimal">
+<li>Examine the structure of the iris data set. How many observations
+and variables are in the data set?</li>
+</ol>
+<pre><code>There are 5 total variables with 150 observations</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Create a new data frame iris1 that contains only the species
+virginica and versicolor with sepal lengths longer than 6 cm and sepal
+widths longer than 2.5 cm. How many observations and variables are in
+the data set? <strong>63 Observations and 5 Variables</strong></li>
+</ol>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## Warning: package &#39;tidyverse&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Warning: package &#39;readr&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Warning: package &#39;stringr&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Warning: package &#39;forcats&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ forcats   1.0.0     ✔ readr     2.1.4
+## ✔ ggplot2   3.4.4     ✔ stringr   1.5.0
+## ✔ lubridate 1.9.3     ✔ tibble    3.2.1
+## ✔ purrr     1.0.2     ✔ tidyr     1.3.0</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>data(iris)
+iris1 &lt;- filter(iris, Species != &quot;setosa&quot; &amp; Sepal.Length &gt;= 6 &amp; Sepal.Width &gt;= 2.5)
+iris1</code></pre>
+<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 1           7.0         3.2          4.7         1.4 versicolor
+## 2           6.4         3.2          4.5         1.5 versicolor
+## 3           6.9         3.1          4.9         1.5 versicolor
+## 4           6.5         2.8          4.6         1.5 versicolor
+## 5           6.3         3.3          4.7         1.6 versicolor
+## 6           6.6         2.9          4.6         1.3 versicolor
+## 7           6.1         2.9          4.7         1.4 versicolor
+## 8           6.7         3.1          4.4         1.4 versicolor
+## 9           6.1         2.8          4.0         1.3 versicolor
+## 10          6.3         2.5          4.9         1.5 versicolor
+## 11          6.1         2.8          4.7         1.2 versicolor
+## 12          6.4         2.9          4.3         1.3 versicolor
+## 13          6.6         3.0          4.4         1.4 versicolor
+## 14          6.8         2.8          4.8         1.4 versicolor
+## 15          6.7         3.0          5.0         1.7 versicolor
+## 16          6.0         2.9          4.5         1.5 versicolor
+## 17          6.0         2.7          5.1         1.6 versicolor
+## 18          6.0         3.4          4.5         1.6 versicolor
+## 19          6.7         3.1          4.7         1.5 versicolor
+## 20          6.1         3.0          4.6         1.4 versicolor
+## 21          6.2         2.9          4.3         1.3 versicolor
+## 22          6.3         3.3          6.0         2.5  virginica
+## 23          7.1         3.0          5.9         2.1  virginica
+## 24          6.3         2.9          5.6         1.8  virginica
+## 25          6.5         3.0          5.8         2.2  virginica
+## 26          7.6         3.0          6.6         2.1  virginica
+## 27          7.3         2.9          6.3         1.8  virginica
+## 28          6.7         2.5          5.8         1.8  virginica
+## 29          7.2         3.6          6.1         2.5  virginica
+## 30          6.5         3.2          5.1         2.0  virginica
+## 31          6.4         2.7          5.3         1.9  virginica
+## 32          6.8         3.0          5.5         2.1  virginica
+## 33          6.4         3.2          5.3         2.3  virginica
+## 34          6.5         3.0          5.5         1.8  virginica
+## 35          7.7         3.8          6.7         2.2  virginica
+## 36          7.7         2.6          6.9         2.3  virginica
+## 37          6.9         3.2          5.7         2.3  virginica
+## 38          7.7         2.8          6.7         2.0  virginica
+## 39          6.3         2.7          4.9         1.8  virginica
+## 40          6.7         3.3          5.7         2.1  virginica
+## 41          7.2         3.2          6.0         1.8  virginica
+## 42          6.2         2.8          4.8         1.8  virginica
+## 43          6.1         3.0          4.9         1.8  virginica
+## 44          6.4         2.8          5.6         2.1  virginica
+## 45          7.2         3.0          5.8         1.6  virginica
+## 46          7.4         2.8          6.1         1.9  virginica
+## 47          7.9         3.8          6.4         2.0  virginica
+## 48          6.4         2.8          5.6         2.2  virginica
+## 49          6.3         2.8          5.1         1.5  virginica
+## 50          6.1         2.6          5.6         1.4  virginica
+## 51          7.7         3.0          6.1         2.3  virginica
+## 52          6.3         3.4          5.6         2.4  virginica
+## 53          6.4         3.1          5.5         1.8  virginica
+## 54          6.0         3.0          4.8         1.8  virginica
+## 55          6.9         3.1          5.4         2.1  virginica
+## 56          6.7         3.1          5.6         2.4  virginica
+## 57          6.9         3.1          5.1         2.3  virginica
+## 58          6.8         3.2          5.9         2.3  virginica
+## 59          6.7         3.3          5.7         2.5  virginica
+## 60          6.7         3.0          5.2         2.3  virginica
+## 61          6.3         2.5          5.0         1.9  virginica
+## 62          6.5         3.0          5.2         2.0  virginica
+## 63          6.2         3.4          5.4         2.3  virginica</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Now, create a iris2 data frame from iris1 that contains only the
+columns for Species, Sepal.Length, and Sepal.Width. How many
+observations and variables are in the data set? <strong>63 Observations
+and 3 Variables</strong></li>
+</ol>
+<pre class="r"><code>iris2 &lt;- select(iris1, -(3:4))
+iris2</code></pre>
+<pre><code>##    Sepal.Length Sepal.Width    Species
+## 1           7.0         3.2 versicolor
+## 2           6.4         3.2 versicolor
+## 3           6.9         3.1 versicolor
+## 4           6.5         2.8 versicolor
+## 5           6.3         3.3 versicolor
+## 6           6.6         2.9 versicolor
+## 7           6.1         2.9 versicolor
+## 8           6.7         3.1 versicolor
+## 9           6.1         2.8 versicolor
+## 10          6.3         2.5 versicolor
+## 11          6.1         2.8 versicolor
+## 12          6.4         2.9 versicolor
+## 13          6.6         3.0 versicolor
+## 14          6.8         2.8 versicolor
+## 15          6.7         3.0 versicolor
+## 16          6.0         2.9 versicolor
+## 17          6.0         2.7 versicolor
+## 18          6.0         3.4 versicolor
+## 19          6.7         3.1 versicolor
+## 20          6.1         3.0 versicolor
+## 21          6.2         2.9 versicolor
+## 22          6.3         3.3  virginica
+## 23          7.1         3.0  virginica
+## 24          6.3         2.9  virginica
+## 25          6.5         3.0  virginica
+## 26          7.6         3.0  virginica
+## 27          7.3         2.9  virginica
+## 28          6.7         2.5  virginica
+## 29          7.2         3.6  virginica
+## 30          6.5         3.2  virginica
+## 31          6.4         2.7  virginica
+## 32          6.8         3.0  virginica
+## 33          6.4         3.2  virginica
+## 34          6.5         3.0  virginica
+## 35          7.7         3.8  virginica
+## 36          7.7         2.6  virginica
+## 37          6.9         3.2  virginica
+## 38          7.7         2.8  virginica
+## 39          6.3         2.7  virginica
+## 40          6.7         3.3  virginica
+## 41          7.2         3.2  virginica
+## 42          6.2         2.8  virginica
+## 43          6.1         3.0  virginica
+## 44          6.4         2.8  virginica
+## 45          7.2         3.0  virginica
+## 46          7.4         2.8  virginica
+## 47          7.9         3.8  virginica
+## 48          6.4         2.8  virginica
+## 49          6.3         2.8  virginica
+## 50          6.1         2.6  virginica
+## 51          7.7         3.0  virginica
+## 52          6.3         3.4  virginica
+## 53          6.4         3.1  virginica
+## 54          6.0         3.0  virginica
+## 55          6.9         3.1  virginica
+## 56          6.7         3.1  virginica
+## 57          6.9         3.1  virginica
+## 58          6.8         3.2  virginica
+## 59          6.7         3.3  virginica
+## 60          6.7         3.0  virginica
+## 61          6.3         2.5  virginica
+## 62          6.5         3.0  virginica
+## 63          6.2         3.4  virginica</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Create an iris3 data frame from iris2 that orders the observations
+from largest to smallest sepal length. Show the first 6 rows of this
+data set.</li>
+</ol>
+<pre class="r"><code>iris3 &lt;- arrange(iris2, by = desc(Sepal.Length))
+head(iris3, 6)</code></pre>
+<pre><code>##   Sepal.Length Sepal.Width   Species
+## 1          7.9         3.8 virginica
+## 2          7.7         3.8 virginica
+## 3          7.7         2.6 virginica
+## 4          7.7         2.8 virginica
+## 5          7.7         3.0 virginica
+## 6          7.6         3.0 virginica</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Create an iris4 data frame from iris3 that creates a column with a
+sepal area (length * width) value for each observation. How many
+observations and variables are in the data set? <strong>63 Observations
+and 4 Variables</strong></li>
+</ol>
+<pre class="r"><code>iris4 &lt;- mutate(iris3, Sepal.Area = Sepal.Length*Sepal.Width)
+iris4</code></pre>
+<pre><code>##    Sepal.Length Sepal.Width    Species Sepal.Area
+## 1           7.9         3.8  virginica      30.02
+## 2           7.7         3.8  virginica      29.26
+## 3           7.7         2.6  virginica      20.02
+## 4           7.7         2.8  virginica      21.56
+## 5           7.7         3.0  virginica      23.10
+## 6           7.6         3.0  virginica      22.80
+## 7           7.4         2.8  virginica      20.72
+## 8           7.3         2.9  virginica      21.17
+## 9           7.2         3.6  virginica      25.92
+## 10          7.2         3.2  virginica      23.04
+## 11          7.2         3.0  virginica      21.60
+## 12          7.1         3.0  virginica      21.30
+## 13          7.0         3.2 versicolor      22.40
+## 14          6.9         3.1 versicolor      21.39
+## 15          6.9         3.2  virginica      22.08
+## 16          6.9         3.1  virginica      21.39
+## 17          6.9         3.1  virginica      21.39
+## 18          6.8         2.8 versicolor      19.04
+## 19          6.8         3.0  virginica      20.40
+## 20          6.8         3.2  virginica      21.76
+## 21          6.7         3.1 versicolor      20.77
+## 22          6.7         3.0 versicolor      20.10
+## 23          6.7         3.1 versicolor      20.77
+## 24          6.7         2.5  virginica      16.75
+## 25          6.7         3.3  virginica      22.11
+## 26          6.7         3.1  virginica      20.77
+## 27          6.7         3.3  virginica      22.11
+## 28          6.7         3.0  virginica      20.10
+## 29          6.6         2.9 versicolor      19.14
+## 30          6.6         3.0 versicolor      19.80
+## 31          6.5         2.8 versicolor      18.20
+## 32          6.5         3.0  virginica      19.50
+## 33          6.5         3.2  virginica      20.80
+## 34          6.5         3.0  virginica      19.50
+## 35          6.5         3.0  virginica      19.50
+## 36          6.4         3.2 versicolor      20.48
+## 37          6.4         2.9 versicolor      18.56
+## 38          6.4         2.7  virginica      17.28
+## 39          6.4         3.2  virginica      20.48
+## 40          6.4         2.8  virginica      17.92
+## 41          6.4         2.8  virginica      17.92
+## 42          6.4         3.1  virginica      19.84
+## 43          6.3         3.3 versicolor      20.79
+## 44          6.3         2.5 versicolor      15.75
+## 45          6.3         3.3  virginica      20.79
+## 46          6.3         2.9  virginica      18.27
+## 47          6.3         2.7  virginica      17.01
+## 48          6.3         2.8  virginica      17.64
+## 49          6.3         3.4  virginica      21.42
+## 50          6.3         2.5  virginica      15.75
+## 51          6.2         2.9 versicolor      17.98
+## 52          6.2         2.8  virginica      17.36
+## 53          6.2         3.4  virginica      21.08
+## 54          6.1         2.9 versicolor      17.69
+## 55          6.1         2.8 versicolor      17.08
+## 56          6.1         2.8 versicolor      17.08
+## 57          6.1         3.0 versicolor      18.30
+## 58          6.1         3.0  virginica      18.30
+## 59          6.1         2.6  virginica      15.86
+## 60          6.0         2.9 versicolor      17.40
+## 61          6.0         2.7 versicolor      16.20
+## 62          6.0         3.4 versicolor      20.40
+## 63          6.0         3.0  virginica      18.00</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Create iris5 that calculates the average sepal length, the average
+sepal width, and the sample size of the entire iris4 data frame and
+print iris5.</li>
+</ol>
+<pre class="r"><code>iris5 &lt;- summarize(iris4, meanLength = mean(Sepal.Length), meanWidth = mean(Sepal.Width), SampleSize = n())
+print(iris5)</code></pre>
+<pre><code>##   meanLength meanWidth SampleSize
+## 1    6.64127  3.012698         63</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Finally, create iris6 that calculates the average sepal length, the
+average sepal width, and the sample size <strong>for each
+species</strong> of in the iris4 data frame and print iris6.</li>
+</ol>
+<pre class="r"><code>iris6 &lt;- group_by(iris4, Species)
+
+iris6 &lt;- summarize(iris6, meanLength = mean(Sepal.Length), meanWidth = mean(Sepal.Width), SampleSize = n())
+
+print(iris6)</code></pre>
+<pre><code>## # A tibble: 2 × 4
+##   Species    meanLength meanWidth SampleSize
+##   &lt;fct&gt;           &lt;dbl&gt;     &lt;dbl&gt;      &lt;int&gt;
+## 1 versicolor       6.40      2.97         21
+## 2 virginica        6.76      3.04         42</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>In these exercises, you have successively modified different
+versions of the data frame iris1 iris2 iris3 iris4 iris5 iris6. At each
+stage, the output data frame from one operation serves as the input fro
+the next. A more efficient way to do this is to use the pipe operator
+%&gt;% from the tidyr package. See if you can rework all of your
+previous statements (except for iris5) into an extended piping operation
+that uses iris as the input and generates irisFinal as the output.</li>
+</ol>
+<pre class="r"><code>irisFinal &lt;- iris %&gt;%
+   filter(Species != &quot;setosa&quot; &amp; Sepal.Length &gt;= 6 &amp; Sepal.Width &gt;= 2.5) %&gt;% 
+   select(-(3:4)) %&gt;% #iris2
+   arrange(by = desc(Sepal.Length)) %&gt;% #iris3
+   mutate(Sepal.Area = Sepal.Length*Sepal.Width) %&gt;% #iris4
+  group_by(Species) %&gt;% #iris6
+  summarize(meanLength = mean(Sepal.Length), meanWidth =     mean(Sepal.Width), SampleSize = n())
+print(irisFinal)</code></pre>
+<pre><code>## # A tibble: 2 × 4
+##   Species    meanLength meanWidth SampleSize
+##   &lt;fct&gt;           &lt;dbl&gt;     &lt;dbl&gt;      &lt;int&gt;
+## 1 versicolor       6.40      2.97         21
+## 2 virginica        6.76      3.04         42</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>Create a ‘longer’ data frame using the original iris data set with
+three columns named “Species”, “Measure”, “Value”. The column “Species”
+will retain the species names of the data set. The column “Measure” will
+include whether the value corresponds to Sepal.Length, Sepal.Width,
+Petal.Length, or Petal.Width and the column “Value” will include the
+numerical values of those measurements.</li>
+</ol>
+<pre class="r"><code>irisLong &lt;- iris %&gt;%
+  pivot_longer(cols = c(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),
+          names_to = &quot;Measure&quot;,
+          values_to = &quot;Value&quot;)
+print(irisLong)</code></pre>
+<pre><code>## # A tibble: 600 × 3
+##    Species Measure      Value
+##    &lt;fct&gt;   &lt;chr&gt;        &lt;dbl&gt;
+##  1 setosa  Sepal.Length   5.1
+##  2 setosa  Sepal.Width    3.5
+##  3 setosa  Petal.Length   1.4
+##  4 setosa  Petal.Width    0.2
+##  5 setosa  Sepal.Length   4.9
+##  6 setosa  Sepal.Width    3  
+##  7 setosa  Petal.Length   1.4
+##  8 setosa  Petal.Width    0.2
+##  9 setosa  Sepal.Length   4.7
+## 10 setosa  Sepal.Width    3.2
+## # ℹ 590 more rows</code></pre>
 
 
 
