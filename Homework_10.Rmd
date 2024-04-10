@@ -1,0 +1,119 @@
+---
+title: "Homework_10"
+author: "Megan O'Connor"
+date: "2024-04-03"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Question 1
+```{r}
+  counter <- 0
+vector <- c(0,1,2,0,7,8,0,9,9,4,5,0)
+counting_zeroes <- function(vector) {
+  for (i in vector) {
+    if (i == 0) {
+      counter <- counter + 1
+    }
+  }
+  
+  return(counter)
+}
+
+counting_zeroes(vector)
+
+```
+
+Question 2
+```{r}
+zero_subset <- function(vector) {
+  return(sum(vector == 0))
+}
+
+zero_subset(vector)
+```
+
+
+Question 3: Write a function that takes as input two integers representing the number of rows and columns in a matrix. The output is a matrix of these dimensions in which each element is the product of the row number x the column number.
+```{r}
+
+
+mtrx <- function(rows,cols) {
+  result <- matrix(nrow=rows,ncol=cols)
+  
+  for (i in 1:rows) {
+    for (j in 1:cols) {
+      result[i,j] <- i*j
+    }
+  }
+return(result)
+}
+
+rows <- 4
+cols <- 5
+final_matrix <- mtrx(rows,cols)
+print(final_matrix)
+```
+
+Question 4a. Simulate a dataset with 3 groups of data, each group drawn from a distribution with a different mean. The final data frame should have 1 column for group and 1 column for the response variable.
+```{r}
+set.seed(200)
+n <- 100
+groupmean <- c(10,40,50)
+
+group <- rep(1:3, each = n)
+response <- c(rnorm(n, mean = groupmean[1]),
+             rnorm(n, mean = groupmean[2]),
+             rnorm(n, mean = groupmean[3]))
+data <- data.frame(group, response)
+print(data)
+```
+
+Question 4b. Write a custom function that 1) reshuffles the response variable, and 2) calculates the mean of each group in the reshuffled data. Store the means in a vector of length 3.
+```{r}
+reshuffle <- function(data) {
+  for (i in data) {
+    shuffleresponse <- sample(response)
+  }
+  data <- data.frame(group,shuffleresponse)
+  return(data)
+}
+
+
+reshuffle(data)
+```
+
+Question 4c. Use a for loop to repeat the function in b 100 times. Store the results in a data frame that has 1 column indicating the replicate number and 1 column for each new group mean, for a total of 4 columns.
+```{r}
+# data frame for my new results
+newresults <- data.frame(matrix(nrow=100, ncol=4))
+colnames(newresults) <- c("rep_no", "G1_mean", "G2_mean", "G3_mean")
+
+Question4 <- function(data) {
+  for (i in 1:nrow(data)){
+    newresponse <- reshuffle(data)$shuffleresponse
+    newresults[i, 1] <- i 
+    newresults[i, 2:4] <- newresponse
+  }
+  return(newresults)
+  }
+  
+Question4(data)
+```
+
+Question 4d. Use qplot() to create a histogram of the means for each reshuffled group. How do the distributions of reshuffled means compare to the original means?
+```{r}
+library(ggplot2)
+
+# Calculate means of G1, G2, G3
+
+
+# Create histogram using qplot
+qplot(data=newresults, x= , geom="histogram", bins = 3,
+      main= "Histogram Reshuffled Means", xlab = "Mean Value", ylab = "Frequency")
+
+
+```

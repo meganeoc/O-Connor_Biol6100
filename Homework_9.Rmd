@@ -1,0 +1,28 @@
+---
+title: "Homework_9"
+author: "Megan O'Connor"
+date: "2024-03-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Question 1 Functions
+```{r}
+library(ggplot2)
+source("Homework_9.R")
+w <- GenDataFunc()
+x <- SummaryFunc(w)
+y <- ANOVAFunc(x)
+z <- PlotFunc(y)
+
+```
+Question 2 Functions Changed
+```{r}
+source("Homework_9.R")
+v <- NewDataFunc()
+x <- SummaryFunc(v)
+y <- ANOVAFunc(x)
+z <- PlotFunc(y)
+```
