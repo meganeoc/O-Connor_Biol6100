@@ -7,7 +7,7 @@ GenDataFunc <- function(){
   MySet <- rnorm(n=3000, mean=5.676607)
   MySet <- data.frame(1:3000,MySet)
   names(MySet) <- list("ID","myVar")
-  MySet[MySet$myVar>0,]
+  MySet[MySet$myVar>0,] # subset back to myset
   str(MySet)
   return(MySet)
 }
@@ -15,11 +15,12 @@ GenDataFunc <- function(){
 
 # Step 2: Generate Relevant Summary Statistics
 SummaryFunc <- function(GenDataFunc){
-  print(summary(MySet$myVar))
+  MySet <- GenDataFunc()
+  print(summary(MySet))
 }
 
 # Step 3 Conduct a Statistical Test
-ANOVAFunc <- function(GenDataFunc) {
+ANOVAFunc <- function() {
   nGroup <- 2 # Number of Treatments
   nName <- c("SteadyState","Rest") # Group Name
   nSize <- c(35,58) # Observations per group
@@ -39,10 +40,11 @@ ANOVAFunc <- function(GenDataFunc) {
   unlist(z)
   unlist(z)[7]
   ANOsum <- list(Fval=unlist(z)[7],probF=unlist(z)[9])
-  ANOsum
+  return(list(ANOdata = ANOdata, ANOsum = ANOsum))
+
 }
 # Step 4: Plot Your Data
-PlotFunc <- function(ANOVAFunc){
+PlotFunc <- function(ANOdata){
   ANOPlot <- ggplot(data=ANOdata,aes(x=TGroup,y=resVar,fill=TGroup)) +
     geom_boxplot()
   print(ANOPlot)
@@ -61,6 +63,7 @@ NewDataFunc <- function(){
 
 # Step 2: Generate Relevant Summary Statistics
 SummaryFunc <- function(GenDataFunc){
+  MySet <- GenDataFunc()
   print(summary(MySet$myVar))
 }
 
@@ -89,6 +92,9 @@ ANOVAFunc <- function(GenDataFunc) {
 
 # Step 4: Plot Your Data
 PlotFunc <- function(ANOVAFunc){
+  ANOdata <- ANOVAFunc()$ANOdata
+  TGroup <- ANOVAFunc()$TGroup
+  resVar <- ANOVAFunc()$resVar
   ANOPlot <- ggplot(data=ANOdata,aes(x=TGroup,y=resVar,fill=TGroup)) +
     geom_boxplot()
   print(ANOPlot)

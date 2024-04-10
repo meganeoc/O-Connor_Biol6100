@@ -74,46 +74,73 @@ print(data)
 
 Question 4b. Write a custom function that 1) reshuffles the response variable, and 2) calculates the mean of each group in the reshuffled data. Store the means in a vector of length 3.
 ```{r}
-reshuffle <- function(data) {
-  for (i in data) {
-    shuffleresponse <- sample(response)
+reshuffle_mean_calc <- function(data) {
+  reshuffled_means <- numeric(3)
+  for (i in 1:3) {
+    group_data <- data[data$group == i, ]
+    shuffleresponse <- sample(group_data$response)
+    data[data$group == i, "response"] <- shuffleresponse
+    reshuffled_means[i] <- mean(shuffleresponse)
+    reshuffled_means[i] <- mean(shuffleresponse)
   }
-  data <- data.frame(group,shuffleresponse)
-  return(data)
+  return(reshuffled_means)
 }
 
 
-reshuffle(data)
+calculations <- reshuffle_mean_calc(data)
+reshuffle_mean_calc(data)
+
+
 ```
 
 Question 4c. Use a for loop to repeat the function in b 100 times. Store the results in a data frame that has 1 column indicating the replicate number and 1 column for each new group mean, for a total of 4 columns.
 ```{r}
-# data frame for my new results
-newresults <- data.frame(matrix(nrow=100, ncol=4))
-colnames(newresults) <- c("rep_no", "G1_mean", "G2_mean", "G3_mean")
-
-Question4 <- function(data) {
-  for (i in 1:nrow(data)){
-    newresponse <- reshuffle(data)$shuffleresponse
-    newresults[i, 1] <- i 
-    newresults[i, 2:4] <- newresponse
-  }
-  return(newresults)
-  }
+rerun <- function(data){
   
-Question4(data)
+# Making dataframe
+results <- data.frame(matrix(nrow = n, ncol = 4))  # Create an empty matrix to store results
+colnames(results) <- c("replicate", paste0("mean_", 1:3))  # Column names for the results
+
+
+for (i in 1:n) {
+  new_means <- reshuffle_mean_calc(data)
+  results[i, 1:4] <- c(i,new_means)
+  }
+(results)
+}
+
+n <- 100
+rerun(data)
+
+
+##### OLD UNUSED CODE GRAVEYARD##################
+#   # Call the function for each replicate
+#   new_data <- data
+#   new_means <- reshuffle_mean_calc(new_data)
+#   
+#   # Store the results in the matrix
+#   results[replicate_num, ] <- c(replicate_num, new_means)
+# }
+# 
+# # Convert the matrix to a data frame
+# histodata <- as.data.frame(results)
+# 
+# # Print the first few rows of the results data frame
+# print(head(histodata))
 ```
 
 Question 4d. Use qplot() to create a histogram of the means for each reshuffled group. How do the distributions of reshuffled means compare to the original means?
 ```{r}
 library(ggplot2)
-
-# Calculate means of G1, G2, G3
-
-
 # Create histogram using qplot
-qplot(data=newresults, x= , geom="histogram", bins = 3,
-      main= "Histogram Reshuffled Means", xlab = "Mean Value", ylab = "Frequency")
 
 
+qplot(data = calculations, x = reshuffled_means, geom = "histogram",
+      bins = 3, fill = I("blue"),
+      main = "Histogram of Reshuffled Means",
+      xlab = "Mean Value", ylab = "Frequency") +
+  geom_vline(xintercept = mean(data$response), color = "red", linetype = "dashed") +
+  labs(title = "Comparison of Reshuffled Means to Original Mean",
+       subtitle = "Red dashed line indicates the original mean") +
+  theme_minimal()
 ```
