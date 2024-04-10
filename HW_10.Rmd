@@ -1,0 +1,62 @@
+---
+title: "HW_10.RMD"
+author: "Megan O'Connor"
+date: "2024-04-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Question 1. Using a for loop, write a function to calculate the number of zeroes in a numeric vector. Before entering the loop, set up a counter variable counter <- 0. Inside the loop, add 1 to counter each time you have a zero in the vector. Finally, use return(counter) for the output.
+```{r}
+counting_function <- function(x=my_vec) {
+  counter <- 0
+  for (i in seq_along(my_vec)) {
+    if(my_vec[i]==0) {
+      counter <- counter + 1
+    }
+  }
+ return(counter)
+  } # end of counting
+my_vec <- c(0,1,5,7,0,8,0,5,3,4,1)
+counting_function(my_vec)
+```
+Question 2. Use subsetting instead of a loop to rewrite the function as a single line of code.
+```{r}
+zero_subset <- function(vector) {
+  return(sum(vector == 0))
+}
+
+zero_subset(vector)
+```
+Question 3. 
+```{r}
+mtrx <- function(rows,cols) {
+  result <- matrix(nrow=rows,ncol=cols)
+  
+  for (i in 1:rows) {
+    for (j in 1:cols) {
+      result[i,j] <- i*j
+    }
+  }
+return(result)
+}
+
+rows <- 4
+cols <- 5
+final_matrix <- mtrx(rows,cols)
+print(final_matrix)
+```
+
+
+Question 4a.
+```{r}
+
+```
+Question 4b. 
+
+Question 4c.
+
+Question 4d.
+

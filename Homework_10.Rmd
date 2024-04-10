@@ -63,32 +63,41 @@ Question 4a. Simulate a dataset with 3 groups of data, each group drawn from a d
 set.seed(200)
 n <- 100
 groupmean <- c(10,40,50)
+groupSD <- c(runif(3))
 
 group <- rep(1:3, each = n)
 response <- c(rnorm(n, mean = groupmean[1]),
              rnorm(n, mean = groupmean[2]),
              rnorm(n, mean = groupmean[3]))
-data <- data.frame(group, response)
-print(data)
+RandomData <- data.frame(group, response)
+print(RandomData)
+
+Generate_Data <- function(seed=200, n=100, groupmeans = c(10, 40, 50)) {
+  set.seed(seed)
+  groupSD <- runif(length(groupmeans))
+  
+  group <- rep(1:length(groupmeans), each = n)
+  response <- c(rnorm(n, mean = groupmean[1]),
+             rnorm(n, mean = groupmean[2]),
+             rnorm(n, mean = groupmean[3]))
+  RandomData <- data.frame(group, response)
+  return(RandomData)
+}
+  RandomData <- Generate_Data
 ```
 
 Question 4b. Write a custom function that 1) reshuffles the response variable, and 2) calculates the mean of each group in the reshuffled data. Store the means in a vector of length 3.
 ```{r}
-reshuffle_mean_calc <- function(data) {
+reshuffle_mean_calc <- function(RandomData) {
   reshuffled_means <- numeric(3)
   for (i in 1:3) {
     group_data <- data[data$group == i, ]
     shuffleresponse <- sample(group_data$response)
     data[data$group == i, "response"] <- shuffleresponse
     reshuffled_means[i] <- mean(shuffleresponse)
-    reshuffled_means[i] <- mean(shuffleresponse)
   }
   return(reshuffled_means)
 }
-
-
-calculations <- reshuffle_mean_calc(data)
-reshuffle_mean_calc(data)
 
 
 ```
@@ -112,21 +121,6 @@ for (i in 1:n) {
 n <- 100
 rerun(data)
 
-
-##### OLD UNUSED CODE GRAVEYARD##################
-#   # Call the function for each replicate
-#   new_data <- data
-#   new_means <- reshuffle_mean_calc(new_data)
-#   
-#   # Store the results in the matrix
-#   results[replicate_num, ] <- c(replicate_num, new_means)
-# }
-# 
-# # Convert the matrix to a data frame
-# histodata <- as.data.frame(results)
-# 
-# # Print the first few rows of the results data frame
-# print(head(histodata))
 ```
 
 Question 4d. Use qplot() to create a histogram of the means for each reshuffled group. How do the distributions of reshuffled means compare to the original means?
@@ -135,12 +129,5 @@ library(ggplot2)
 # Create histogram using qplot
 
 
-qplot(data = calculations, x = reshuffled_means, geom = "histogram",
-      bins = 3, fill = I("blue"),
-      main = "Histogram of Reshuffled Means",
-      xlab = "Mean Value", ylab = "Frequency") +
-  geom_vline(xintercept = mean(data$response), color = "red", linetype = "dashed") +
-  labs(title = "Comparison of Reshuffled Means to Original Mean",
-       subtitle = "Red dashed line indicates the original mean") +
-  theme_minimal()
+plot <- qplot(data=results)
 ```
