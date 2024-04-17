@@ -1,0 +1,61 @@
+---
+title: "Homework_12"
+author: "Megan O'Connor"
+date: "2024-04-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+YAY GRAPHS!
+Using the airquality dataset from R, that has info about air quality measurements in New York City.
+```
+ggplot template (for my brain)
+
+p1 <- ggplot(data= <DATA>) +
+      aes(<MAPPINGS>) + 
+      <GEOM_FUNCTION>(aes(<MAPPINGS>),
+                      stat=<STAT>,
+                      position=<POSITION>) +
+                      <COORDINATE_FUNCTION> +
+                      <FACET_FUNCTION>
+```
+```{r}
+# loading things area
+library(ggplot2)
+library(beeswarm)
+library(ggbeeswarm)
+library(RColorBrewer)
+data(airquality)
+head(airquality)
+
+
+```
+
+Beeswarm Plot! bzzzzzzzzz
+```{r}
+# had a lot of trouble since month is technically a numeric value, but here is how to turn it into a factor
+airquality$Month <- factor(airquality$Month)
+
+ggplot(airquality,aes(x=Month, y=Wind, color=Month)) +
+  geom_beeswarm()+
+  scale_color_manual(values = c("olivedrab3","gold","orange2","red1","darkred"))+
+  ggtitle("Windspeed Variation in New York City Based on Month")
+
+```
+Making a plot with some of my very initial data
+```{r}
+data <- read.csv("NLPsheet2.csv")
+ggplot(data=data,aes(x=Date, y=Total_NLPs)) +
+  geom_beeswarm()
+```
+I think this is kinda the wrong graph type for this data right now though!
+
+Bar Plot of NLPs
+```{r}
+ggplot(data, aes(x = Behavior, y = Total_NLPs, fill = Behavior)) + 
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c("#ffffcc", "#a1dab4", "#41b6c4","#2c7fb8", "#225ea8")) +
+  ggtitle("Presence of NLPs Dependent on Dolphin Behavior")
+```
