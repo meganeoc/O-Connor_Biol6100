@@ -44,11 +44,44 @@ ANOVAFunc <- function() {
 
 }
 # Step 4: Plot Your Data
-PlotFunc <- function(ANOdata){
-  ANOPlot <- ggplot(data=ANOdata,aes(x=TGroup,y=resVar,fill=TGroup)) +
-    geom_boxplot()
-  print(ANOPlot)
+PlotFunc <- function(){
+ANOVA_data <- ANOVAFunc()
+TGroup <- ANOVA_data$ANOdata$TGroup
+resVar <- ANOVA_data$ANOdata$resVar
+ANOPlot <- ggplot(data = ANOVA_data$ANOdata, aes(x = TGroup, y = resVar, fill = TGroup)) +
+  geom_boxplot()
+print(ANOPlot)
 }
+
+
+
+
+
+# PlotFunc <- function(ANO_data) {
+#   ANOPlot <- ggplot(data = ANO_data, aes(x = TGroup, y = resVar, fill = TGroup)) +
+#     geom_boxplot()
+#   print(ANOPlot)
+#   {
+#     # Generate ANOVA data once and store it
+#     ANOVA_data <- ANOVAFunc()
+#     
+#     # Plot the data
+#     return(PlotFunc(ANOVA_data$ANOdata))
+#   }
+# }
+
+
+
+
+# PlotFunc <- function(ANOVAFunc){
+#   ANOdata <- ANOVAFunc()$ANOdata
+#   TGroup <- ANOVAFunc()$TGroup
+#   resVar <- ANOVAFunc()$resVar
+#   ANOPlot <- ggplot(data=ANOdata,aes(x=TGroup,y=resVar,fill=TGroup)) +
+#     geom_boxplot()
+#   print(ANOPlot)
+# }
+
 
 ############ Modifying the Functions with a New Dataset #################
 # Step 1: Generate a Fake Dataset 
@@ -62,12 +95,13 @@ NewDataFunc <- function(){
 }
 
 # Step 2: Generate Relevant Summary Statistics
-SummaryFunc <- function(GenDataFunc){
-  MySet <- GenDataFunc()
+NewSummaryFunc <- function(NewDataFunc){
+  MySet <- NewDataFunc()
   print(summary(MySet$myVar))
+  return(summary(MySet$myVar))
 }
 
-ANOVAFunc <- function(GenDataFunc) {
+NewANOVAFunc <- function(NewDataFunc) {
   nGroup <- 2 # Number of Treatments
   nName <- c("SteadyState","Rest") # Group Name
   nSize <- c(35,58) # Observations per group
@@ -87,16 +121,17 @@ ANOVAFunc <- function(GenDataFunc) {
   unlist(z)
   unlist(z)[7]
   ANOsum <- list(Fval=unlist(z)[7],probF=unlist(z)[9])
-  ANOsum
+  return(list(ANOdata = ANOdata, ANOsum = ANOsum))
 }
 
 # Step 4: Plot Your Data
-PlotFunc <- function(ANOVAFunc){
-  ANOdata <- ANOVAFunc()$ANOdata
-  TGroup <- ANOVAFunc()$TGroup
-  resVar <- ANOVAFunc()$resVar
-  ANOPlot <- ggplot(data=ANOdata,aes(x=TGroup,y=resVar,fill=TGroup)) +
+NewPlotFunc <- function(){
+  ANOVA_data <- NewANOVAFunc()
+  TGroup <- ANOVA_data$ANOdata$TGroup
+  resVar <- ANOVA_data$ANOdata$resVar
+  ANOPlot <- ggplot(data = ANOVA_data$ANOdata, aes(x = TGroup, y = resVar, fill = TGroup)) +
     geom_boxplot()
   print(ANOPlot)
 }
+
 

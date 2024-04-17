@@ -10,17 +10,19 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 Question 1. Using a for loop, write a function to calculate the number of zeroes in a numeric vector. Before entering the loop, set up a counter variable counter <- 0. Inside the loop, add 1 to counter each time you have a zero in the vector. Finally, use return(counter) for the output.
 ```{r}
-counting_function <- function(x=my_vec) {
   counter <- 0
-  for (i in seq_along(my_vec)) {
-    if(my_vec[i]==0) {
+vector <- c(0,1,2,0,7,8,0,9,9,4,5,0)
+counting_zeroes <- function(vector) {
+  for (i in vector) {
+    if (i == 0) {
       counter <- counter + 1
     }
   }
- return(counter)
-  } # end of counting
-my_vec <- c(0,1,5,7,0,8,0,5,3,4,1)
-counting_function(my_vec)
+  
+  return(counter)
+}
+
+counting_zeroes(vector)
 ```
 Question 2. Use subsetting instead of a loop to rewrite the function as a single line of code.
 ```{r}
@@ -52,11 +54,81 @@ print(final_matrix)
 
 Question 4a.
 ```{r}
+n <- 100
+means <- c(50,75,100)
+group <- rep(1:3, each=n)
+response <- c(rnorm(n,mean=means[1]),
+              rnorm(n,mean=means[2]),
+              rnorm(n,mean=means[3]))
+
+# making a data fram!
+MyData <- data.frame(group, response)
+data
 
 ```
 Question 4b. 
+```{r}
+# first I need to reshuffle the data and THEN get the means again
+reshuffle_time <- function(MyData){
+  for (i in MyData) {
+    shuffleresponse <- sample(MyData[,2])
+    shuffleresponse
+    
+    # then I make a new frame
+    data_2 <- data.frame(group,shuffleresponse)
+    data_2
+    
+    # NOW i get the means
+    group_1mean <- mean(data_2[1:n,2])
+    group_2mean <- mean(data_2[n:(2*n),2])
+    group_3mean <- mean(data_2[(2*n):(3*n),2])
+  }
+  new_means <-  data.frame(group_1mean, group_2mean, group_3mean)
+  return(new_means)
+}
 
+reshuffle_time(MyData)
+# YAY MY NEW MEANS ARE REAL
+```
 Question 4c.
+```{r}
+library(tidyverse)
+# using a for loop to replicate these 100 times :)
 
+loopy <- function(MyData) {
+  MyResults <- data.frame(matrix(nrow=n,ncol=4))
+  colnames(MyResults) <- c("replicate", "group_1mean", "group_2mean", "group_3mean")
+  # n = 100 in this case
+  for (i in 1:n) {
+    new_means <- reshuffle_time(MyData) # bringing back this function
+    MyResults[i,1:4] <- c(i,new_means)
+  }
+  # what are we returning???? RESULTS
+  return(MyResults)
+}
+
+n = 100 # like i said before
+
+answer <- loopy(MyData)
+answer
+```
 Question 4d.
+```{r}
+# time to make a nice looking plot that you can fill with whatever group you want to look at
+library(ggplot2)
+answer
 
+answer_plot <- qplot(data=answer,
+              y=answer[,2],
+              geom="histogram",
+              fill=I("purple"),
+              main="Group Means",
+              xlim=c(0,100), # repeats 100x
+              ylim=c(0,100), # my means go up to 100
+              xlab="Replicate",
+              # now we let ppl know which group we're looking at
+              ylab="Group 1 Mean Value")
+answer_plot
+
+
+```

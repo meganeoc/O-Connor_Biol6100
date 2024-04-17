@@ -60,51 +60,63 @@ print(final_matrix)
 
 Question 4a. Simulate a dataset with 3 groups of data, each group drawn from a distribution with a different mean. The final data frame should have 1 column for group and 1 column for the response variable.
 ```{r}
-set.seed(200)
-n <- 100
-groupmean <- c(10,40,50)
-groupSD <- c(runif(3))
+# set.seed(200)
+# n <- 100
+# groupmean <- c(10,40,50)
+# groupSD <- c(runif(3))
+# 
+# group <- rep(1:3, each = n)
+# response <- c(rnorm(n, mean = groupmean[1]),
+#              rnorm(n, mean = groupmean[2]),
+#              rnorm(n, mean = groupmean[3]))
+# RandomData <- data.frame(group, response)
+# print(RandomData)
 
-group <- rep(1:3, each = n)
-response <- c(rnorm(n, mean = groupmean[1]),
-             rnorm(n, mean = groupmean[2]),
-             rnorm(n, mean = groupmean[3]))
-RandomData <- data.frame(group, response)
-print(RandomData)
+# Generate_Data <- function(seed=200, n=100, groupmean = c(10, 40, 50)) {
+#   set.seed(seed)
+#   groupSD <- runif(length(groupmean))
+#   
+#   group <- rep(1:length(groupmean), each = n)
+#   response <- c(rnorm(n, mean = groupmean[1]),
+#              rnorm(n, mean = groupmean[2]),
+#              rnorm(n, mean = groupmean[3]))
+#   RandomData <- data.frame(group, response)
+#   return(RandomData)
+# }
+# 
+# RandomData <- Generate_Data()
+# Generate_Data()
 
-Generate_Data <- function(seed=200, n=100, groupmeans = c(10, 40, 50)) {
-  set.seed(seed)
-  groupSD <- runif(length(groupmeans))
-  
-  group <- rep(1:length(groupmeans), each = n)
-  response <- c(rnorm(n, mean = groupmean[1]),
-             rnorm(n, mean = groupmean[2]),
-             rnorm(n, mean = groupmean[3]))
-  RandomData <- data.frame(group, response)
-  return(RandomData)
-}
-  RandomData <- Generate_Data
+n <- 100 
+means <- c(50, 70, 20)
+group <- rep(1:3, each=n)
+response <- c(rnorm(n,mean=means[1]),
+              rnorm(n,mean=means[2]),
+              rnorm(n,mean=means[3]))
+
+Random_Data <- data.frame(group,response)
+data
 ```
 
 Question 4b. Write a custom function that 1) reshuffles the response variable, and 2) calculates the mean of each group in the reshuffled data. Store the means in a vector of length 3.
 ```{r}
-reshuffle_mean_calc <- function(RandomData) {
+reshuffle_mean_calc <- function(GenerateData) {
   reshuffled_means <- numeric(3)
   for (i in 1:3) {
-    group_data <- data[data$group == i, ]
+    group_data <- RandomData[RandomData$group == i, ]
     shuffleresponse <- sample(group_data$response)
-    data[data$group == i, "response"] <- shuffleresponse
+    RandomData[RandomData$group == i, "response"] <- shuffleresponse
     reshuffled_means[i] <- mean(shuffleresponse)
   }
   return(reshuffled_means)
 }
 
-
+reshuffle_mean_calc(RandomData)
 ```
 
 Question 4c. Use a for loop to repeat the function in b 100 times. Store the results in a data frame that has 1 column indicating the replicate number and 1 column for each new group mean, for a total of 4 columns.
 ```{r}
-rerun <- function(data){
+rerun <- function(RandomData){
   
 # Making dataframe
 results <- data.frame(matrix(nrow = n, ncol = 4))  # Create an empty matrix to store results

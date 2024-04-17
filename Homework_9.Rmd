@@ -14,16 +14,16 @@ library(ggplot2)
 source("Homework_9.R")
 w <- GenDataFunc()
 x <- SummaryFunc(w)
-y <- ANOVAFunc(x)
-z <- PlotFunc(y)
+y <- ANOVAFunc()
+z <- PlotFunc()
 
 ```
 Question 2 Functions Changed
 ```{r}
 source("Homework_9.R")
-v <- NewDataFunc()
-x <- SummaryFunc(v)
-y <- ANOVAFunc(x)
-z <- PlotFunc(y)
+a <- NewDataFunc()
+b <- NewSummaryFunc(a)
+c <- NewANOVAFunc()
+d <- NewPlotFunc()
 ```
-
+# hello! I think i fixed
