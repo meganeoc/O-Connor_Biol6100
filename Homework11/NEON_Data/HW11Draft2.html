@@ -11,9 +11,9 @@
 
 <meta name="author" content="Megan O’Connor" />
 
-<meta name="date" content="2024-01-24" />
+<meta name="date" content="2024-05-06" />
 
-<title>Index</title>
+<title>HW11Draft2</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -350,29 +350,115 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Index</h1>
+<h1 class="title toc-ignore">HW11Draft2</h1>
 <h4 class="author">Megan O’Connor</h4>
-<h4 class="date">2024-01-24</h4>
+<h4 class="date">2024-05-06</h4>
 
 </div>
 
 
-<p>Hello :)</p>
-<div id="megs-homework-list" class="section level3">
-<h3>Meg’s Homework List</h3>
-<p>Homework 1/2: <a href="Homework_2.html">link</a></p>
-<p>Maybe this is Homework 3: <a href="Homework_3.html">link</a></p>
-<p>Allegedly Homework 4: <a href="Homework_4.html">link</a></p>
-<p>Booby Trap OR Homework 5: <a href="Homework_5.html">link</a></p>
-<p>Homework 6? using data about bottlenose dolphins from Allen et. al
-(2022): <a href="Homework_6.html">link</a></p>
-<p>Perhaps Homework 7 (Experimental Design): <a href="Homework_7.html">link</a></p>
-<p>Definitely Homework 8: <a href="Homework_8.html">link</a></p>
-<p>Homework 9!!!!!!!!!!!: <a href="Homework_9.html">link</a></p>
-<p>Homework 10 (No Longer under Construction) <a href="HW_10.html">link</a></p>
-<p>Homework 11 (barracudaR): <a href="Homework_11.html">link</a></p>
-<p>Homework 12: <a href="Homework_12.html">link</a></p>
-</div>
+<pre class="r"><code># Packages
+library(log4r)</code></pre>
+<pre><code>## Warning: package &#39;log4r&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;log4r&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     debug</code></pre>
+<pre class="r"><code>library(TeachingDemos)
+library(tidyverse)</code></pre>
+<pre><code>## Warning: package &#39;tidyverse&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Warning: package &#39;readr&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Warning: package &#39;stringr&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Warning: package &#39;forcats&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.3     ✔ readr     2.1.4
+## ✔ forcats   1.0.0     ✔ stringr   1.5.0
+## ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+## ✔ purrr     1.0.2</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>library(pracma)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;pracma&#39;
+## 
+## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     cross</code></pre>
+<pre class="r"><code>library(ggmosaic)
+
+setwd(&quot;~/Desktop/O&#39;Connor_Biol6100/Homework11/barracudar&quot;)
+source(&quot;~/Desktop/O&#39;Connor_Biol6100/Homework11/barracudar/DataTableTemplate.R&quot;)
+source(&quot;~/Desktop/O&#39;Connor_Biol6100/Homework11/barracudar/AddFolder.R&quot;)
+source(&quot;~/Desktop/O&#39;Connor_Biol6100/Homework11/barracudar/BuildFunction.R&quot;)
+source(&quot;~/Desktop/O&#39;Connor_Biol6100/Homework11/barracudar/MetaDataTemplate.R&quot;)
+source(&quot;~/Desktop/O&#39;Connor_Biol6100/Homework11/barracudar/CreatePaddedLabel.R&quot;)
+source(&quot;~/Desktop/O&#39;Connor_Biol6100/Homework11/barracudar/InitiateSeed.R&quot;)
+source(&quot;~/Desktop/O&#39;Connor_Biol6100/Homework11/barracudar/SetUpLog.R&quot;)
+source(&quot;~/Desktop/O&#39;Connor_Biol6100/Homework11/barracudar/SourceBatch.R&quot;)
+library(stringr)
+
+setwd(&quot;~/Desktop/O&#39;Connor_Biol6100/Homework11/NEON_Data&quot;)
+
+# First make a vector called filenames, using list.files
+filesinlists &lt;- list.files(&quot;~/Desktop/O&#39;Connor_Biol6100/Homework11/NEON_Data&quot;)
+
+# Initialize file_names vector
+file_names &lt;- character(length(filesinlists)) 
+
+# for loop to make a vector for the actual names, adding a path
+for (i in seq_along(filesinlists)) {
+  # Construct full file path
+  filepath &lt;- file.path(&quot;~/Desktop/O&#39;Connor_Biol6100/Homework11/NEON_Data&quot;, filesinlists[i])
+  
+  # Check if file contains &quot;countdata&quot; in its name
+  if (grepl(&quot;countdata&quot;, filesinlists[i], ignore.case = TRUE)) {
+    file_names[i] &lt;- filepath
+  }
+}
+
+# Remove empty strings from file_names
+file_names &lt;- file_names[file_names != &quot;&quot;]
+
+# 3/4
+# - get rid of empties
+# - year number
+# - total individuals
+# - unique species
+information &lt;- function(filesinlists, file_names) {
+  metadata &lt;- matrix(0, nrow = length(file_names), ncol = 4)
+  colnames(metadata) &lt;- c(&quot;File&quot;, &quot;Year&quot;, &quot;Total Indiv&quot;, &quot;Sp Richness&quot;)
+  
+  for (i in seq_along(file_names)) {
+    # Read CSV file
+    csvs &lt;- read.csv(file_names[i])
+    
+    # Convert to data frame
+    frame_csv &lt;- data.frame(csvs)
+    
+    # Extract year from file name
+    year &lt;- as.numeric(sub(&#39;.*_(\\d{4})_.*&#39;, &#39;\\1&#39;, basename(file_names[i])))
+    
+    # Calculate total individuals
+    total_indiv &lt;- nrow(frame_csv)
+    
+    # Calculate unique species richness
+    sp_rich &lt;- length(unique(frame_csv[, 12]))
+    
+    # Fill metadata matrix
+    metadata[i, ] &lt;- c(basename(file_names[i]), year, total_indiv, sp_rich)
+  }
+  
+  return(metadata)
+}
+
+information(filesinlists, file_names)</code></pre>
+<pre><code>##      File Year Total Indiv Sp Richness</code></pre>
 
 
 

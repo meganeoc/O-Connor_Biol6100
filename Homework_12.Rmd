@@ -2,7 +2,9 @@
 title: "Homework_12"
 author: "Megan O'Connor"
 date: "2024-04-17"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -27,6 +29,7 @@ library(ggplot2)
 library(beeswarm)
 library(ggbeeswarm)
 library(RColorBrewer)
+library(tidyr)
 data(airquality)
 head(airquality)
 
@@ -58,4 +61,42 @@ ggplot(data, aes(x = Behavior, y = Total_NLPs, fill = Behavior)) +
   geom_bar(stat = "identity") +
   scale_fill_manual(values = c("#ffffcc", "#a1dab4", "#41b6c4","#2c7fb8", "#225ea8")) +
   ggtitle("Presence of NLPs Dependent on Dolphin Behavior")
+```
+
+other plots that I made for my committee meeting, with updated data
+``` {r}
+
+
+
+# --------- BEHAVIOR BAR PLOT ----------
+ggplot(data, aes(x = Behavior, y = Total_NLPs, fill = Behavior)) + 
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c("#ffffcc", "#c7e9b4", "#a1dab4", "#41b6c4","#2c7fb8", "#225ea8"))
+  
+
+# -------------------- NLP Bar Plot------
+# Reshape the data from wide to long format
+Collect_NLP <- gather(data, key = "category", value = "value", BP, DC, SB, SH)
+
+# Create the bar plot
+ggplot(Collect_NLP, aes(x = category, y = value, fill = category)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values=c("#c7e9b4","#a1dab4","#41b6c4","#225ea8"))+
+  labs(title = "Total Presence of NLPs: June 2023",
+       x = "NLP Type",
+       y = "Total Appearances") +
+  theme_minimal()
+
+
+# ------------- Group Size v Whistle Numbers Comparison ------------
+# Scatter plot
+scatter <- ggplot(data, aes(x = Group_Size, y = Total_NLPs)) +
+  geom_point() +
+  geom_smooth(method="lm", color="red", se=FALSE) +
+  labs(title = "Group Size v. NLP Totals",
+       x = "Group Size",
+       y = "Number of NLPs") +
+  theme_minimal()
+scatter
+
 ```

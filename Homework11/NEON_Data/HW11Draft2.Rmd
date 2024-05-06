@@ -1,0 +1,86 @@
+---
+title: "HW11Draft2"
+author: "Megan O'Connor"
+date: "2024-05-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Packages
+library(log4r)
+library(TeachingDemos)
+library(tidyverse)
+library(pracma)
+library(ggmosaic)
+
+setwd("~/Desktop/O'Connor_Biol6100/Homework11/barracudar")
+source("~/Desktop/O'Connor_Biol6100/Homework11/barracudar/DataTableTemplate.R")
+source("~/Desktop/O'Connor_Biol6100/Homework11/barracudar/AddFolder.R")
+source("~/Desktop/O'Connor_Biol6100/Homework11/barracudar/BuildFunction.R")
+source("~/Desktop/O'Connor_Biol6100/Homework11/barracudar/MetaDataTemplate.R")
+source("~/Desktop/O'Connor_Biol6100/Homework11/barracudar/CreatePaddedLabel.R")
+source("~/Desktop/O'Connor_Biol6100/Homework11/barracudar/InitiateSeed.R")
+source("~/Desktop/O'Connor_Biol6100/Homework11/barracudar/SetUpLog.R")
+source("~/Desktop/O'Connor_Biol6100/Homework11/barracudar/SourceBatch.R")
+library(stringr)
+
+setwd("~/Desktop/O'Connor_Biol6100/Homework11/NEON_Data")
+
+# First make a vector called filenames, using list.files
+filesinlists <- list.files("~/Desktop/O'Connor_Biol6100/Homework11/NEON_Data")
+
+# Initialize file_names vector
+file_names <- character(length(filesinlists)) 
+
+# for loop to make a vector for the actual names, adding a path
+for (i in seq_along(filesinlists)) {
+  # Construct full file path
+  filepath <- file.path("~/Desktop/O'Connor_Biol6100/Homework11/NEON_Data", filesinlists[i])
+  
+  # Check if file contains "countdata" in its name
+  if (grepl("countdata", filesinlists[i], ignore.case = TRUE)) {
+    file_names[i] <- filepath
+  }
+}
+
+# Remove empty strings from file_names
+file_names <- file_names[file_names != ""]
+
+# 3/4
+# - get rid of empties
+# - year number
+# - total individuals
+# - unique species
+information <- function(filesinlists, file_names) {
+  metadata <- matrix(0, nrow = length(file_names), ncol = 4)
+  colnames(metadata) <- c("File", "Year", "Total Indiv", "Sp Richness")
+  
+  for (i in seq_along(file_names)) {
+    # Read CSV file
+    csvs <- read.csv(file_names[i])
+    
+    # Convert to data frame
+    frame_csv <- data.frame(csvs)
+    
+    # Extract year from file name
+    year <- as.numeric(sub('.*_(\\d{4})_.*', '\\1', basename(file_names[i])))
+    
+    # Calculate total individuals
+    total_indiv <- nrow(frame_csv)
+    
+    # Calculate unique species richness
+    sp_rich <- length(unique(frame_csv[, 12]))
+    
+    # Fill metadata matrix
+    metadata[i, ] <- c(basename(file_names[i]), year, total_indiv, sp_rich)
+  }
+  
+  return(metadata)
+}
+
+information(filesinlists, file_names)
+```
